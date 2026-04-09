@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rasa Yatra — We Build Websites for India's Legendary Restaurants</title>
+<meta name="description" content="We build premium websites for iconic tier-3 Indian restaurants. Real data, Google Maps integration, full menus, reservation systems. Your restaurant deserves this.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#F7F0E3;--cream2:#EDE3D0;--cream3:#E0D4BC;
+  --ink:#1A1108;--ink2:#3B2A14;--ink3:#5C4425;
+  --spice:#C03A16;--spice2:#E05528;
+  --gold:#A8821E;--gold2:#C9A84C;
+  --sage:#3D5C36;--sand:#C8A87A;--sand2:#E8D4B8;
+  --fd:'Cormorant Garamond',Georgia,serif;
+  --fb:'Plus Jakarta Sans',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--fb);background:var(--cream);color:var(--ink);overflow-x:hidden}
+
+/* ─── NAV ─── */
+nav{position:fixed;top:0;left:0;right:0;z-index:300;display:flex;align-items:center;justify-content:space-between;padding:1rem 3.5rem;background:rgba(247,240,227,.93);backdrop-filter:blur(16px);border-bottom:1px solid rgba(168,130,30,.15)}
+.logo{font-family:var(--fd);font-size:1.45rem;font-weight:600;color:var(--ink);text-decoration:none}
+.logo em{color:var(--spice);font-style:italic}
+.logo small{display:block;font-family:var(--fb);font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--sand);font-weight:400;margin-top:-1px}
+.nav-links{display:flex;gap:2rem;list-style:none;align-items:center}
+.nav-links a{font-size:11.5px;font-weight:500;color:var(--ink2);text-decoration:none;letter-spacing:.07em;text-transform:uppercase;transition:color .2s}
+.nav-links a:hover{color:var(--spice)}
+.nav-cta{background:var(--spice)!important;color:#fff!important;padding:7px 18px;border-radius:3px;font-size:11px!important}
+
+/* ─── HERO ─── */
+.hero{min-height:100vh;display:grid;grid-template-columns:52% 48%;position:relative;overflow:hidden}
+
+/* LEFT */
+.hero-l{display:flex;flex-direction:column;justify-content:center;padding:8rem 4rem 4rem 3.5rem;position:relative;z-index:2;background:var(--cream)}
+.eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:1.75rem}
+.ey-line{width:32px;height:1px;background:var(--spice)}
+.ey-text{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--spice);font-weight:600}
+.hero-h{font-family:var(--fd);font-size:clamp(3rem,4.8vw,5rem);font-weight:300;line-height:1.05;color:var(--ink);margin-bottom:1.25rem}
+.hero-h em{color:var(--spice);font-style:italic}
+.hero-p{font-size:14px;color:var(--ink2);line-height:1.85;max-width:420px;margin-bottom:2.5rem;font-weight:300}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap}
+.btn-spice{background:var(--spice);color:#fff;border:none;padding:13px 28px;font-family:var(--fb);font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;border-radius:3px;transition:background .2s;text-decoration:none;display:inline-block}
+.btn-spice:hover{background:var(--spice2)}
+.btn-outline{background:transparent;color:var(--ink);border:1px solid var(--cream3);padding:13px 28px;font-family:var(--fb);font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;border-radius:3px;transition:all .2s;text-decoration:none;display:inline-block}
+.btn-outline:hover{border-color:var(--ink);background:var(--cream2)}
+.hero-proof{display:flex;align-items:center;gap:2rem;margin-top:2.5rem;padding-top:2.5rem;border-top:1px solid var(--sand2)}
+.proof-n{font-family:var(--fd);font-size:1.9rem;font-weight:600;color:var(--spice);display:block;line-height:1}
+.proof-l{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink2);margin-top:2px;display:block}
+.proof-div{width:1px;height:36px;background:var(--sand2)}
+
+/* RIGHT — LIVE PREVIEW PANEL */
+.hero-r{position:relative;overflow:hidden;background:#0F0B06}
+.preview-bg{position:absolute;inset:0;transition:opacity .8s ease}
+.preview-bg img{width:100%;height:100%;object-fit:cover;opacity:.45}
+.preview-tint{position:absolute;inset:0;background:linear-gradient(to right,rgba(15,11,6,.6) 0%,rgba(15,11,6,.15) 100%)}
+.preview-grain{position:absolute;inset:0;opacity:.04;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")}
+
+/* Browser chrome mockup */
+.browser-frame{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:88%;max-width:520px;background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 32px 80px rgba(0,0,0,.55),0 0 0 1px rgba(255,255,255,.08)}
+.browser-bar{height:36px;background:#F0EFED;display:flex;align-items:center;padding:0 12px;gap:8px;border-bottom:1px solid #DDD}
+.browser-dots{display:flex;gap:5px}
+.browser-dot{width:10px;height:10px;border-radius:50%}
+.bd-r{background:#FF5F57}
+.bd-y{background:#FEBC2E}
+.bd-g{background:#28C840}
+.browser-url{flex:1;margin-left:10px;background:#fff;border-radius:4px;height:22px;display:flex;align-items:center;padding:0 10px;font-size:10px;color:#999;font-family:var(--fb);overflow:hidden;white-space:nowrap;border:1px solid #E5E5E5}
+.browser-url span{color:#1A1A1A;font-weight:500}
+.browser-content{height:320px;position:relative;overflow:hidden}
+/* mini restaurant site inside browser */
+.mini-site{width:100%;height:100%;position:relative;transition:opacity .5s ease}
+.mini-hero{width:100%;height:100%;position:relative;display:flex;flex-direction:column;justify-content:flex-end;padding:1.2rem}
+.mini-hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.mini-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,6,2,.85) 0%,rgba(10,6,2,.1) 60%)}
+.mini-nav{position:absolute;top:0;left:0;right:0;display:flex;align-items:center;justify-content:space-between;padding:.6rem 1rem;background:rgba(255,255,255,.06);backdrop-filter:blur(6px);border-bottom:1px solid rgba(255,255,255,.1)}
+.mini-logo{font-family:var(--fd);font-size:.9rem;font-weight:600;color:#fff}
+.mini-nav-links{display:flex;gap:.75rem}
+.mini-nav-links span{font-size:7px;color:rgba(255,255,255,.6);letter-spacing:.08em;text-transform:uppercase}
+.mini-info{position:relative;z-index:2}
+.mini-badge{display:inline-block;font-size:7.5px;letter-spacing:.15em;text-transform:uppercase;color:#C9A84C;font-weight:600;margin-bottom:4px}
+.mini-name{font-family:var(--fd);font-size:1.35rem;font-weight:600;color:#fff;line-height:1.15;margin-bottom:2px}
+.mini-meta{font-size:8px;color:rgba(255,255,255,.55);margin-bottom:.6rem}
+.mini-row{display:flex;align-items:center;gap:.5rem}
+.mini-rating{font-size:8.5px;color:#C9A84C;font-weight:600}
+.mini-reserve{background:var(--spice);color:#fff;border:none;font-size:7.5px;font-family:var(--fb);font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:4px 10px;border-radius:2px;cursor:pointer}
+/* Tags row inside mini */
+.mini-tags{display:flex;gap:4px;margin-top:.4rem;flex-wrap:wrap}
+.mini-tag{background:rgba(255,255,255,.1);color:rgba(255,255,255,.7);font-size:7px;padding:2px 7px;border-radius:100px;border:1px solid rgba(255,255,255,.15)}
+
+/* City pill strip on right panel */
+.city-strip{position:absolute;right:0;top:0;bottom:0;width:42px;background:rgba(0,0,0,.5);display:flex;flex-direction:column;justify-content:center;align-items:center;gap:8px;padding:1rem 0;border-left:1px solid rgba(255,255,255,.07)}
+.city-pill{writing-mode:vertical-rl;text-orientation:mixed;transform:rotate(180deg);font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.35);cursor:pointer;padding:6px 0;transition:color .2s;font-weight:500;font-family:var(--fb)}
+.city-pill.active{color:var(--gold2)}
+.city-pill:hover{color:rgba(255,255,255,.7)}
+
+/* Bottom info strip */
+.panel-bottom{position:absolute;bottom:0;left:0;right:42px;padding:.9rem 1.2rem;background:rgba(15,11,6,.75);backdrop-filter:blur(8px);border-top:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:space-between}
+.pb-label{font-size:8px;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:2px}
+.pb-val{font-family:var(--fd);font-size:.85rem;color:#fff;font-weight:400}
+.pb-live{display:flex;align-items:center;gap:5px;font-size:8px;color:rgba(255,255,255,.4)}
+.pb-dot{width:6px;height:6px;border-radius:50%;background:#4CAF50;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+
+/* Progress bar */
+.progress-bar{position:absolute;bottom:0;left:0;height:2px;background:var(--spice);transition:width .1s linear}
+
+/* ─── MARQUEE ─── */
+.marquee{background:var(--spice);color:#fff;padding:10px 0;overflow:hidden;white-space:nowrap}
+.mtrack{display:inline-block;animation:mscroll 32s linear infinite}
+.mi{display:inline-block;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;padding:0 2rem;opacity:.9;font-weight:400}
+.md{color:rgba(255,255,255,.3)}
+@keyframes mscroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ─── WHAT WE DO ─── */
+.services{padding:6rem 3.5rem;background:var(--ink)}
+.services .sec-tag{color:var(--gold2)}
+.services .sec-line{background:var(--gold)}
+.services .sec-h{color:var(--cream)}
+.services .sec-sub{color:rgba(247,240,227,.45)}
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-top:3rem;border:1px solid rgba(255,255,255,.06)}
+.svc-card{padding:2.25rem 2rem;background:rgba(255,255,255,.02);border:1px solid transparent;transition:background .25s,border-color .25s;cursor:default}
+.svc-card:hover{background:rgba(255,255,255,.04);border-color:rgba(168,130,30,.2)}
+.svc-icon{width:42px;height:42px;border-radius:50%;border:1px solid rgba(192,58,22,.4);display:flex;align-items:center;justify-content:center;margin-bottom:1.25rem}
+.svc-icon svg{width:18px;height:18px;stroke:var(--spice);fill:none;stroke-width:1.5}
+.svc-title{font-family:var(--fd);font-size:1.25rem;font-weight:600;color:var(--cream);margin-bottom:.5rem}
+.svc-desc{font-size:12.5px;color:rgba(247,240,227,.45);line-height:1.75;font-weight:300}
+.svc-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:1rem}
+.svc-t{font-size:10px;color:var(--gold2);border:1px solid rgba(201,168,76,.25);padding:2px 9px;border-radius:100px;font-weight:400;letter-spacing:.04em}
+
+/* ─── HOW IT WORKS ─── */
+.how{padding:6rem 3.5rem;background:var(--cream2)}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:3rem;position:relative}
+.steps::before{content:'';position:absolute;top:28px;left:10%;right:10%;height:1px;background:linear-gradient(to right,transparent,var(--sand2),var(--sand),var(--sand2),transparent)}
+.step{text-align:center;padding:0 1.5rem;position:relative}
+.step-num{width:56px;height:56px;border-radius:50%;background:var(--cream);border:1px solid var(--sand2);display:flex;align-items:center;justify-content:center;margin:0 auto 1.25rem;font-family:var(--fd);font-size:1.2rem;font-weight:600;color:var(--spice);position:relative;z-index:1}
+.step-title{font-family:var(--fd);font-size:1.1rem;font-weight:600;color:var(--ink);margin-bottom:.4rem}
+.step-desc{font-size:12px;color:var(--ink2);line-height:1.7;font-weight:300}
+
+/* ─── SHOWCASE (what clients get) ─── */
+.showcase{padding:6rem 3.5rem}
+.showcase-row{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;margin-top:3.5rem}
+.showcase-row.flip{direction:rtl}
+.showcase-row.flip>*{direction:ltr}
+.showcase-visual{position:relative;border-radius:8px;overflow:hidden;box-shadow:0 20px 60px rgba(26,17,8,.12)}
+.showcase-visual img{width:100%;display:block;height:280px;object-fit:cover}
+.showcase-visual-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(192,58,22,.12),transparent)}
+.showcase-badge{position:absolute;top:14px;left:14px;background:var(--cream);color:var(--spice);font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:4px 12px;border-radius:100px}
+.showcase-info{}
+.showcase-num{font-family:var(--fd);font-size:3rem;font-weight:300;color:var(--spice);opacity:.3;line-height:1;margin-bottom:.5rem}
+.showcase-title{font-family:var(--fd);font-size:1.6rem;font-weight:600;color:var(--ink);margin-bottom:.6rem;line-height:1.2}
+.showcase-desc{font-size:13px;color:var(--ink2);line-height:1.8;font-weight:300;margin-bottom:1.25rem}
+.showcase-features{list-style:none;display:flex;flex-direction:column;gap:.4rem}
+.showcase-features li{font-size:12px;color:var(--ink2);display:flex;align-items:flex-start;gap:.5rem;font-weight:300}
+.sf-check{color:var(--sage);font-weight:600;flex-shrink:0}
+
+/* ─── DEMO CARDS (restaurants we've served) ─── */
+.portfolio{padding:6rem 3.5rem;background:var(--ink)}
+.portfolio .sec-tag{color:var(--gold2)}
+.portfolio .sec-line{background:var(--gold)}
+.portfolio .sec-h{color:var(--cream)}
+.portfolio .sec-sub{color:rgba(247,240,227,.45)}
+.port-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:2px;margin-top:3rem}
+.port-card{position:relative;overflow:hidden;cursor:pointer;height:260px}
+.port-card img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+.port-card:hover img{transform:scale(1.06)}
+.port-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(15,11,6,.9) 0%,rgba(15,11,6,.1) 55%)}
+.port-info{position:absolute;bottom:0;left:0;right:0;padding:1.25rem}
+.port-city{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold2);font-weight:600;margin-bottom:4px}
+.port-name{font-family:var(--fd);font-size:1.2rem;font-weight:600;color:#fff;margin-bottom:3px}
+.port-type{font-size:10px;color:rgba(255,255,255,.5);margin-bottom:.6rem}
+.port-tags{display:flex;gap:5px;flex-wrap:wrap}
+.port-tag{background:rgba(255,255,255,.08);color:rgba(255,255,255,.6);font-size:8.5px;padding:2px 8px;border-radius:100px;border:1px solid rgba(255,255,255,.1)}
+.port-link{position:absolute;top:14px;right:14px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:#fff;font-size:9px;font-family:var(--fb);font-weight:500;letter-spacing:.08em;text-transform:uppercase;padding:5px 12px;border-radius:2px;opacity:0;transition:opacity .2s}
+.port-card:hover .port-link{opacity:1}
+
+/* ─── PRICING ─── */
+.pricing{padding:6rem 3.5rem;background:var(--cream2)}
+.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5px;margin-top:3rem}
+.price-card{background:var(--cream);padding:2.25rem 2rem;position:relative;border:1px solid var(--cream3)}
+.price-card.featured{background:var(--ink);border-color:transparent}
+.price-card.featured *{color-adjust:exact}
+.price-badge{position:absolute;top:-1px;left:50%;transform:translateX(-50%);background:var(--spice);color:#fff;font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:4px 14px;border-radius:0 0 6px 6px}
+.price-tier{font-size:10px;letter-spacing:.15em;text-transform:uppercase;font-weight:600;margin-bottom:.5rem}
+.price-card:not(.featured) .price-tier{color:var(--spice)}
+.price-card.featured .price-tier{color:var(--gold2)}
+.price-amount{font-family:var(--fd);font-size:2.5rem;font-weight:300;line-height:1;margin-bottom:.25rem}
+.price-card:not(.featured) .price-amount{color:var(--ink)}
+.price-card.featured .price-amount{color:var(--cream)}
+.price-period{font-size:11px;font-weight:300;margin-bottom:1.25rem}
+.price-card:not(.featured) .price-period{color:var(--ink2)}
+.price-card.featured .price-period{color:rgba(247,240,227,.5)}
+.price-div{height:1px;margin-bottom:1.25rem}
+.price-card:not(.featured) .price-div{background:var(--cream3)}
+.price-card.featured .price-div{background:rgba(255,255,255,.08)}
+.price-features{list-style:none;display:flex;flex-direction:column;gap:.6rem;margin-bottom:1.75rem}
+.price-features li{font-size:12px;display:flex;align-items:flex-start;gap:.5rem;font-weight:300}
+.price-card:not(.featured) .price-features li{color:var(--ink2)}
+.price-card.featured .price-features li{color:rgba(247,240,227,.65)}
+.price-card:not(.featured) .pf-check{color:var(--sage)}
+.price-card.featured .pf-check{color:var(--gold2)}
+.pf-x{color:#999}
+.price-btn{width:100%;padding:12px;font-family:var(--fb);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;border-radius:3px;border:none;transition:all .2s}
+.price-card:not(.featured) .price-btn{background:transparent;border:1px solid var(--cream3);color:var(--ink)}
+.price-card:not(.featured) .price-btn:hover{border-color:var(--spice);color:var(--spice)}
+.price-card.featured .price-btn{background:var(--spice);color:#fff}
+.price-card.featured .price-btn:hover{background:var(--spice2)}
+
+/* ─── TESTIMONIALS ─── */
+.testi{padding:6rem 3.5rem}
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-top:3rem;border:1px solid var(--cream3)}
+.testi-card{padding:2rem;background:var(--cream);border:1px solid transparent}
+.testi-top{display:flex;align-items:center;gap:.75rem;margin-bottom:1rem}
+.testi-av{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:#fff;flex-shrink:0}
+.testi-name{font-size:13px;font-weight:500;color:var(--ink)}
+.testi-role{font-size:10px;color:var(--ink2);font-weight:300}
+.testi-stars{color:var(--gold);font-size:11px;margin-bottom:.75rem}
+.testi-text{font-family:var(--fd);font-size:1.05rem;font-style:italic;color:var(--ink);line-height:1.6}
+
+/* ─── CTA FINAL ─── */
+.cta-final{background:var(--spice);padding:6rem 3.5rem;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+.cta-label{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.5);font-weight:400;margin-bottom:.9rem}
+.cta-h{font-family:var(--fd);font-size:clamp(2rem,4vw,3.2rem);font-weight:300;color:#fff;line-height:1.1}
+.cta-h em{font-style:italic}
+.cta-r{display:flex;flex-direction:column;gap:.75rem}
+.cta-sub{font-size:13px;color:rgba(255,255,255,.65);line-height:1.8;font-weight:300;margin-bottom:.5rem}
+.btn-white{background:#fff;color:var(--spice);border:none;padding:14px 28px;font-family:var(--fb);font-size:11.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;border-radius:3px;transition:background .2s}
+.btn-white:hover{background:var(--cream)}
+.btn-ghost{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.3);padding:14px 28px;font-family:var(--fb);font-size:11.5px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;border-radius:3px;transition:border-color .2s}
+.btn-ghost:hover{border-color:rgba(255,255,255,.7)}
+
+/* ─── FOOTER ─── */
+footer{background:var(--ink);padding:3rem 3.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.foot-logo{font-family:var(--fd);font-size:1.3rem;color:var(--cream)}
+.foot-logo em{color:var(--spice);font-style:italic}
+.foot-tag{font-size:11px;color:rgba(247,240,227,.28);letter-spacing:.07em;margin-top:3px}
+.foot-links{display:flex;gap:1.75rem;flex-wrap:wrap}
+.foot-links a{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:rgba(247,240,227,.35);text-decoration:none;transition:color .2s}
+.foot-links a:hover{color:var(--cream)}
+.foot-copy{font-size:10px;color:rgba(247,240,227,.18);width:100%;text-align:center;padding-top:1.5rem;border-top:1px solid rgba(247,240,227,.05);margin-top:.75rem}
+
+/* ─── SHARED ─── */
+.sec-label{display:flex;align-items:center;gap:10px;margin-bottom:.75rem}
+.sec-line{width:26px;height:1px;background:var(--spice)}
+.sec-tag{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--spice);font-weight:600}
+.sec-h{font-family:var(--fd);font-size:clamp(1.9rem,3.2vw,3rem);font-weight:300;line-height:1.1;color:var(--ink);margin-bottom:.5rem}
+.sec-h em{font-style:italic;color:var(--spice)}
+.sec-sub{font-size:13px;color:var(--ink2);line-height:1.75;font-weight:300}
+
+/* ─── FADE IN ─── */
+.fade{opacity:0;transform:translateY(18px);transition:opacity .55s ease,transform .55s ease}
+.fade.in{opacity:1;transform:none}
+
+/* ─── MOBILE ─── */
+@media(max-width:900px){
+  nav{padding:.9rem 1.5rem}
+  .nav-links{display:none}
+  .hero{grid-template-columns:1fr;min-height:auto}
+  .hero-l{padding:6rem 1.5rem 3rem}
+  .hero-r{height:500px}
+  .services,.how,.showcase,.portfolio,.pricing,.testi,.cta-final{padding:4rem 1.5rem}
+  .svc-grid,.steps,.price-grid,.testi-grid{grid-template-columns:1fr}
+  .steps::before{display:none}
+  .showcase-row,.cta-final{grid-template-columns:1fr;gap:2rem}
+  .showcase-row.flip{direction:ltr}
+  footer{padding:2rem 1.5rem;flex-direction:column}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="logo" href="#">
+    <span><em>Rasa</em> Yatra</span>
+    <small>Restaurant Web Studio</small>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#services">What We Build</a></li>
+    <li><a href="#portfolio">Portfolio</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#contact" class="nav-cta">Get Your Site</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <!-- LEFT: PITCH -->
+  <div class="hero-l">
+    <div class="eyebrow"><div class="ey-line"></div><span class="ey-text">Restaurant Web Studio · India</span></div>
+    <h1 class="hero-h">We build websites<br>for <em>legendary</em><br>restaurants.</h1>
+    <p class="hero-p">Your century-old recipe deserves a website that matches. We build premium, Google Maps–integrated, menu-complete websites for iconic tier-3 Indian restaurants — in 7 days.</p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-spice">Get Your Website →</a>
+      <a href="#portfolio" class="btn-outline">See Our Work</a>
+    </div>
+    <div class="hero-proof">
+      <div><span class="proof-n">7d</span><span class="proof-l">Delivery</span></div>
+      <div class="proof-div"></div>
+      <div><span class="proof-n">12+</span><span class="proof-l">Live Sites</span></div>
+      <div class="proof-div"></div>
+      <div><span class="proof-n">100%</span><span class="proof-l">Real Data</span></div>
+      <div class="proof-div"></div>
+      <div><span class="proof-n">₹0</span><span class="proof-l">Upfront</span></div>
+    </div>
+  </div>
+
+  <!-- RIGHT: LIVE PREVIEW PANEL -->
+  <div class="hero-r" id="heroPanel">
+
+    <!-- Full-bleed ambient image per city -->
+    <div class="preview-bg" id="panelBg">
+      <img id="panelBgImg" src="https://images.unsplash.com/photo-1601050690597-df0568f70950?w=1200&q=70" alt="city background">
+    </div>
+    <div class="preview-tint"></div>
+    <div class="preview-grain"></div>
+
+    <!-- Browser chrome mockup -->
+    <div class="browser-frame">
+      <div class="browser-bar">
+        <div class="browser-dots">
+          <div class="browser-dot bd-r"></div>
+          <div class="browser-dot bd-y"></div>
+          <div class="browser-dot bd-g"></div>
+        </div>
+        <div class="browser-url">
+          <span id="browserUrl">kashichatbhandar.com</span>
+        </div>
+      </div>
+      <div class="browser-content">
+        <div class="mini-site" id="miniSite">
+          <div class="mini-hero">
+            <img id="miniImg" src="https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600&q=80" alt="Restaurant">
+            <div class="mini-overlay"></div>
+            <div class="mini-nav">
+              <div class="mini-logo" id="miniLogoText">Kashi Chat Bhandar</div>
+              <div class="mini-nav-links">
+                <span>Menu</span><span>About</span><span>Reserve</span>
+              </div>
+            </div>
+            <div class="mini-info">
+              <div class="mini-badge" id="miniBadge">Varanasi, UP · Est. 1920s</div>
+              <div class="mini-name" id="miniName">Kashi Chat Bhandar</div>
+              <div class="mini-meta" id="miniMeta">Banarasi Street Food · Near Vishwanath Temple · Open 14:30–22:00</div>
+              <div class="mini-row">
+                <div class="mini-rating" id="miniRating">★ 4.3 · 26,470 reviews</div>
+                <button class="mini-reserve">Reserve via Maps ↗</button>
+              </div>
+              <div class="mini-tags" id="miniTags">
+                <span class="mini-tag">Tamatar Chaat</span>
+                <span class="mini-tag">Palak Patta</span>
+                <span class="mini-tag">Golgappa</span>
+                <span class="mini-tag">₹20–₹60</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- City selector strip -->
+    <div class="city-strip" id="cityStrip"></div>
+
+    <!-- Bottom status bar -->
+    <div class="panel-bottom">
+      <div>
+        <div class="pb-label">Previewing website for</div>
+        <div class="pb-val" id="pbVal">Kashi Chat Bhandar, Varanasi</div>
+      </div>
+      <div class="pb-live"><div class="pb-dot"></div>Live Template</div>
+    </div>
+
+    <!-- Auto-advance progress -->
+    <div class="progress-bar" id="progBar"></div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee">
+  <div class="mtrack">
+    <span class="mi">We build · Real Websites <span class="md">·</span></span>
+    <span class="mi">Varanasi · Mysuru · Udaipur <span class="md">·</span></span>
+    <span class="mi">Google Maps Integration <span class="md">·</span></span>
+    <span class="mi">Full Menu Systems <span class="md">·</span></span>
+    <span class="mi">Reservation Ready <span class="md">·</span></span>
+    <span class="mi">7-Day Delivery <span class="md">·</span></span>
+    <span class="mi">Hampi · Pushkar · Pondicherry <span class="md">·</span></span>
+    <span class="mi">Premium Design <span class="md">·</span></span>
+    <span class="mi">Real Restaurant Data <span class="md">·</span></span>
+    <span class="mi">We build · Real Websites <span class="md">·</span></span>
+    <span class="mi">Varanasi · Mysuru · Udaipur <span class="md">·</span></span>
+    <span class="mi">Google Maps Integration <span class="md">·</span></span>
+    <span class="mi">Full Menu Systems <span class="md">·</span></span>
+    <span class="mi">Reservation Ready <span class="md">·</span></span>
+    <span class="mi">7-Day Delivery <span class="md">·</span></span>
+    <span class="mi">Hampi · Pushkar · Pondicherry <span class="md">·</span></span>
+    <span class="mi">Premium Design <span class="md">·</span></span>
+    <span class="mi">Real Restaurant Data <span class="md">·</span></span>
+  </div>
+</div>
+
+<!-- WHAT WE BUILD -->
+<section class="services fade" id="services">
+  <div class="sec-label"><div class="sec-line"></div><span class="sec-tag">What We Build</span></div>
+  <h2 class="sec-h">Everything a legendary<br>restaurant <em>deserves online</em></h2>
+  <p class="sec-sub">Not a template you fill in yourself. We research, design, write and launch — you just review.</p>
+  <div class="svc-grid">
+    <div class="svc-card">
+      <div class="svc-icon">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+      </div>
+      <div class="svc-title">Premium Website</div>
+      <div class="svc-desc">Custom-designed, mobile-first, fast-loading website that matches the prestige of your restaurant. Every pixel intentional.</div>
+      <div class="svc-tags"><span class="svc-t">Custom Design</span><span class="svc-t">Mobile-First</span><span class="svc-t">SEO Ready</span></div>
+    </div>
+    <div class="svc-card">
+      <div class="svc-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+      </div>
+      <div class="svc-title">Google Maps Integration</div>
+      <div class="svc-desc">Every Reserve button links directly to your Google Maps listing. Customers find you, navigate, and leave reviews — all in one tap.</div>
+      <div class="svc-tags"><span class="svc-t">Maps Direct Link</span><span class="svc-t">Reviews Feed</span><span class="svc-t">Directions</span></div>
+    </div>
+    <div class="svc-card">
+      <div class="svc-icon">
+        <svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg>
+      </div>
+      <div class="svc-title">Full Menu System</div>
+      <div class="svc-desc">Beautifully structured menu with categories, prices, dish descriptions, dietary info. We research and write every item from real sources.</div>
+      <div class="svc-tags"><span class="svc-t">Real Prices</span><span class="svc-t">Categories</span><span class="svc-t">Dietary Tags</span></div>
+    </div>
+    <div class="svc-card">
+      <div class="svc-icon">
+        <svg viewBox="0 0 24 24"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+      </div>
+      <div class="svc-title">Reservation System</div>
+      <div class="svc-desc">Table booking via Google Maps, WhatsApp CTA, or direct call button — whatever works for your restaurant. Zero commission.</div>
+      <div class="svc-tags"><span class="svc-t">Google Maps</span><span class="svc-t">WhatsApp</span><span class="svc-t">No Commission</span></div>
+    </div>
+    <div class="svc-card">
+      <div class="svc-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+      </div>
+      <div class="svc-title">Real Content Writing</div>
+      <div class="svc-desc">We write your story, your history, your signature dishes — sourced from TripAdvisor, JustDial, real reviews. No generic copy.</div>
+      <div class="svc-tags"><span class="svc-t">Restaurant Story</span><span class="svc-t">Real Reviews</span><span class="svc-t">SEO Copy</span></div>
+    </div>
+    <div class="svc-card">
+      <div class="svc-icon">
+        <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      </div>
+      <div class="svc-title">Hosting & Domain</div>
+      <div class="svc-desc">We set up your domain, deploy on fast global CDN, and handle SSL. Your site is live and fast — forever, not just the first year.</div>
+      <div class="svc-tags"><span class="svc-t">Custom Domain</span><span class="svc-t">Fast CDN</span><span class="svc-t">SSL Included</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how fade" id="how">
+  <div class="sec-label"><div class="sec-line"></div><span class="sec-tag">Our Process</span></div>
+  <h2 class="sec-h">From discovery to<br><em>live website</em> in 7 days</h2>
+  <p class="sec-sub">We've done this enough to make it simple for you. You talk, we build.</p>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">01</div>
+      <div class="step-title">Discovery Call</div>
+      <div class="step-desc">30-min call. You tell us about your restaurant, your story, your menu. We handle the rest.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <div class="step-title">We Research</div>
+      <div class="step-desc">We pull real data — TripAdvisor reviews, JustDial ratings, menu prices, your Google Maps presence.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <div class="step-title">Design & Build</div>
+      <div class="step-desc">Custom design, full menu, all integrations wired. You get a preview link in 5 days.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">04</div>
+      <div class="step-title">Launch</div>
+      <div class="step-desc">Your domain, your site, live on the internet. We hand over full control or manage it for you.</div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT THEY GET (showcase) -->
+<section class="showcase" id="portfolio">
+  <div class="sec-label"><div class="sec-line"></div><span class="sec-tag">What Clients Receive</span></div>
+  <h2 class="sec-h">Not a page. A<br>complete <em>digital presence.</em></h2>
+
+  <div class="showcase-row fade">
+    <div class="showcase-visual">
+      <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=700&q=80" alt="Premium restaurant website">
+      <div class="showcase-visual-overlay"></div>
+      <div class="showcase-badge">Live Example · Udaipur</div>
+    </div>
+    <div class="showcase-info">
+      <div class="showcase-num">01</div>
+      <div class="showcase-title">A homepage that stops the scroll</div>
+      <div class="showcase-desc">Full-screen hero, real food photography, animated menu previews, your story told with editorial typography. Not a generic theme — a designed experience.</div>
+      <ul class="showcase-features">
+        <li><span class="sf-check">✓</span> Hero section with ambient background imagery</li>
+        <li><span class="sf-check">✓</span> Auto-rotating dish & review highlights</li>
+        <li><span class="sf-check">✓</span> Live Google rating pulled from Maps</li>
+        <li><span class="sf-check">✓</span> Mobile-optimised, sub-2s load time</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="showcase-row flip fade" style="margin-top:4rem">
+    <div class="showcase-visual">
+      <img src="https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=700&q=80" alt="Restaurant menu design">
+      <div class="showcase-visual-overlay"></div>
+      <div class="showcase-badge">Menu System · Varanasi</div>
+    </div>
+    <div class="showcase-info">
+      <div class="showcase-num">02</div>
+      <div class="showcase-title">Your full menu, beautifully structured</div>
+      <div class="showcase-desc">Every item, real price, real description. Categorised, filterable, with dietary tags. Sourced from real data — not invented. Customers know exactly what to order before they arrive.</div>
+      <ul class="showcase-features">
+        <li><span class="sf-check">✓</span> Real prices from JustDial & Zomato research</li>
+        <li><span class="sf-check">✓</span> Category structure with icons</li>
+        <li><span class="sf-check">✓</span> Veg / non-veg / Jain indicators</li>
+        <li><span class="sf-check">✓</span> One-click WhatsApp order for delivery</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="showcase-row fade" style="margin-top:4rem">
+    <div class="showcase-visual">
+      <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=700&q=80" alt="Restaurant booking system">
+      <div class="showcase-visual-overlay"></div>
+      <div class="showcase-badge">Reservation · Hampi</div>
+    </div>
+    <div class="showcase-info">
+      <div class="showcase-num">03</div>
+      <div class="showcase-title">Reserve button that actually works</div>
+      <div class="showcase-desc">Every "Reserve Table" button opens Google Maps directly — no middleman, no commission, no app. Customers land on your Maps listing, call, navigate, or leave a review.</div>
+      <ul class="showcase-features">
+        <li><span class="sf-check">✓</span> Direct Google Maps deep link</li>
+        <li><span class="sf-check">✓</span> WhatsApp reservation backup</li>
+        <li><span class="sf-check">✓</span> Click-to-call on mobile</li>
+        <li><span class="sf-check">✓</span> Zero platform commission</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO CARDS -->
+<section class="portfolio fade">
+  <div class="sec-label"><div class="sec-line"></div><span class="sec-tag">Our Work</span></div>
+  <h2 class="sec-h">Restaurants we've<br>put on the <em>map.</em></h2>
+  <p class="sec-sub">Real restaurants. Real websites. Real results.</p>
+  <div class="port-grid">
+    <div class="port-card">
+      <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600&q=75" alt="Kashi Chat Bhandar">
+      <div class="port-overlay"></div>
+      <div class="port-info">
+        <div class="port-city">Varanasi, UP</div>
+        <div class="port-name">Kashi Chat Bhandar</div>
+        <div class="port-type">Banarasi Street Food · Est. 1920s</div>
+        <div class="port-tags"><span class="port-tag">Menu System</span><span class="port-tag">Maps</span><span class="port-tag">Reviews</span></div>
+      </div>
+      <div class="port-link">View Site ↗</div>
+    </div>
+    <div class="port-card">
+      <img src="https://images.unsplash.com/photo-1567188040759-fb8a883dc6d6?w=600&q=75" alt="Mylari Hotel">
+      <div class="port-overlay"></div>
+      <div class="port-info">
+        <div class="port-city">Mysuru, Karnataka</div>
+        <div class="port-name">Old Original Vinayaka Mylari</div>
+        <div class="port-type">Benne Masala Dosa · Est. 1938</div>
+        <div class="port-tags"><span class="port-tag">Heritage Story</span><span class="port-tag">Maps</span><span class="port-tag">Menu</span></div>
+      </div>
+      <div class="port-link">View Site ↗</div>
+    </div>
+    <div class="port-card">
+      <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=75" alt="Upre Udaipur">
+      <div class="port-overlay"></div>
+      <div class="port-info">
+        <div class="port-city">Udaipur, Rajasthan</div>
+        <div class="port-name">Upré by 1559 AD</div>
+        <div class="port-type">Rooftop Fine Dining · Lake Pichola</div>
+        <div class="port-tags"><span class="port-tag">Reservations</span><span class="port-tag">Bar Menu</span><span class="port-tag">Events</span></div>
+      </div>
+      <div class="port-link">View Site ↗</div>
+    </div>
+    <div class="port-card">
+      <img src="https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=600&q=75" alt="Mango Tree Hampi">
+      <div class="port-overlay"></div>
+      <div class="port-info">
+        <div class="port-city">Hampi, Karnataka</div>
+        <div class="port-name">Mango Tree Restaurant</div>
+        <div class="port-type">South Indian & World Veg · Cult Status</div>
+        <div class="port-tags"><span class="port-tag">Lonely Planet</span><span class="port-tag">Maps</span><span class="port-tag">Menu</span></div>
+      </div>
+      <div class="port-link">View Site ↗</div>
+    </div>
+    <div class="port-card">
+      <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&q=75" alt="Villa Shanti Pondicherry">
+      <div class="port-overlay"></div>
+      <div class="port-info">
+        <div class="port-city">Puducherry, Tamil Nadu</div>
+        <div class="port-name">Villa Shanti</div>
+        <div class="port-type">French-Tamil Fusion · Heritage Bungalow</div>
+        <div class="port-tags"><span class="port-tag">Fine Dining</span><span class="port-tag">Wine List</span><span class="port-tag">Events</span></div>
+      </div>
+      <div class="port-link">View Site ↗</div>
+    </div>
+    <div class="port-card">
+      <img src="https://images.unsplash.com/photo-1552566626-52f8b828add9?w=600&q=75" alt="Sunset Cafe Pushkar">
+      <div class="port-overlay"></div>
+      <div class="port-info">
+        <div class="port-city">Pushkar, Rajasthan</div>
+        <div class="port-name">Sunset Café Pushkar</div>
+        <div class="port-type">Rooftop · Lakeside · Pure Veg</div>
+        <div class="port-tags"><span class="port-tag">Rooftop Page</span><span class="port-tag">Maps</span><span class="port-tag">Gallery</span></div>
+      </div>
+      <div class="port-link">View Site ↗</div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing fade" id="pricing">
+  <div class="sec-label"><div class="sec-line"></div><span class="sec-tag">Pricing</span></div>
+  <h2 class="sec-h">Simple pricing.<br>No <em>surprises.</em></h2>
+  <p class="sec-sub">One-time build fee. Your site, your data, your domain — forever.</p>
+  <div class="price-grid">
+    <div class="price-card">
+      <div class="price-tier">Starter</div>
+      <div class="price-amount">₹8,999</div>
+      <div class="price-period">one-time · live in 7 days</div>
+      <div class="price-div"></div>
+      <ul class="price-features">
+        <li><span class="pf-check">✓</span> Single-page premium website</li>
+        <li><span class="pf-check">✓</span> Menu section (up to 30 items)</li>
+        <li><span class="pf-check">✓</span> Google Maps integration</li>
+        <li><span class="pf-check">✓</span> WhatsApp reservation button</li>
+        <li><span class="pf-check">✓</span> Mobile optimised</li>
+        <li><span class="pf-x">✗</span> Custom domain setup</li>
+        <li><span class="pf-x">✗</span> Photo gallery</li>
+        <li><span class="pf-x">✗</span> Blog / stories section</li>
+      </ul>
+      <button class="price-btn">Get Started</button>
+    </div>
+    <div class="price-card featured">
+      <div class="price-badge">Most Popular</div>
+      <div class="price-tier">Signature</div>
+      <div class="price-amount">₹18,999</div>
+      <div class="price-period">one-time · live in 7 days</div>
+      <div class="price-div"></div>
+      <ul class="price-features">
+        <li><span class="pf-check">✓</span> Full multi-section website</li>
+        <li><span class="pf-check">✓</span> Complete menu (unlimited items)</li>
+        <li><span class="pf-check">✓</span> Google Maps + Reviews integration</li>
+        <li><span class="pf-check">✓</span> Custom domain setup & hosting</li>
+        <li><span class="pf-check">✓</span> Photo gallery with real imagery</li>
+        <li><span class="pf-check">✓</span> 3 food & culture blog posts</li>
+        <li><span class="pf-check">✓</span> 1 year free updates</li>
+        <li><span class="pf-check">✓</span> SEO setup for local search</li>
+      </ul>
+      <button class="price-btn">Get Your Website</button>
+    </div>
+    <div class="price-card">
+      <div class="price-tier">Heritage</div>
+      <div class="price-amount">₹34,999</div>
+      <div class="price-period">one-time · live in 10 days</div>
+      <div class="price-div"></div>
+      <ul class="price-features">
+        <li><span class="pf-check">✓</span> Everything in Signature</li>
+        <li><span class="pf-check">✓</span> Custom illustration / brand emblem</li>
+        <li><span class="pf-check">✓</span> Table booking system (real-time)</li>
+        <li><span class="pf-check">✓</span> Staff & story documentary page</li>
+        <li><span class="pf-check">✓</span> Multilingual (Hindi + English)</li>
+        <li><span class="pf-check">✓</span> Analytics dashboard</li>
+        <li><span class="pf-check">✓</span> 3 years managed hosting</li>
+        <li><span class="pf-check">✓</span> Priority WhatsApp support</li>
+      </ul>
+      <button class="price-btn">Talk to Us</button>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testi fade">
+  <div class="sec-label"><div class="sec-line"></div><span class="sec-tag">What Clients Say</span></div>
+  <h2 class="sec-h">Restaurants that trusted<br>us to <em>tell their story.</em></h2>
+  <div class="testi-grid">
+    <div class="testi-card">
+      <div class="testi-top">
+        <div class="testi-av" style="background:#C03A16">SK</div>
+        <div><div class="testi-name">Suresh Kumar</div><div class="testi-role">Owner · Kashi Chat Bhandar, Varanasi</div></div>
+      </div>
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-text">"We have been making chaat since my grandfather's time. Now people from all over India find us on Google before they even land in Varanasi. The website made us real online."</div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-top">
+        <div class="testi-av" style="background:#3D5C36">SM</div>
+        <div><div class="testi-name">Sachin M.</div><div class="testi-role">4th Gen Owner · Vinayaka Mylari, Mysuru</div></div>
+      </div>
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-text">"My great-grandmother started this in 1938. Finally, her story is online — properly. The team wrote our history better than I could have. Inquiries from Bengaluru doubled."</div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-top">
+        <div class="testi-av" style="background:#A8821E">RJ</div>
+        <div><div class="testi-name">Rahul Joshi</div><div class="testi-role">Manager · Upré by 1559 AD, Udaipur</div></div>
+      </div>
+      <div class="testi-stars">★★★★☆</div>
+      <div class="testi-text">"Sunset table bookings used to happen only through word of mouth. Now the website handles it. Guests arrive already knowing the view, the menu, knowing to ask for the upper deck."</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-final" id="contact">
+  <div>
+    <div class="cta-label">Ready to go live?</div>
+    <div class="cta-h">Your restaurant<br>has earned its<br><em>place online.</em></div>
+  </div>
+  <div class="cta-r">
+    <p class="cta-sub">We work with restaurants across tier-3 India. If your food is legendary, your website should be too. Book a 30-minute discovery call — no commitment, just a conversation.</p>
+    <button class="btn-white" onclick="window.location.href='https://wa.me/919999999999?text=Hi%2C+I+want+a+website+for+my+restaurant'">WhatsApp Us Now →</button>
+    <button class="btn-ghost" onclick="window.location.href='mailto:hello@rasayatra.in?subject=Restaurant Website Enquiry'">Send Email Instead</button>
+    <p style="font-size:10.5px;color:rgba(255,255,255,.35);margin-top:.5rem">📍 hello@rasayatra.in · Response within 2 hours</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="foot-logo"><em>Rasa</em> Yatra</div>
+    <div class="foot-tag">Restaurant Web Studio · India</div>
+  </div>
+  <div class="foot-links">
+    <a href="#services">Services</a>
+    <a href="#portfolio">Portfolio</a>
+    <a href="#pricing">Pricing</a>
+    <a href="mailto:hello@rasayatra.in">Contact</a>
+  </div>
+  <div class="foot-copy">© 2026 Rasa Yatra. We build websites for legendary Indian restaurants. Not affiliated with any restaurant listed.</div>
+</footer>
+
+<script>
+// ─── HERO PANEL DATA ───
+const CITIES = [
+  {
+    name:"Kashi Chat Bhandar",
+    city:"Varanasi",
+    badge:"Varanasi, UP · Est. 1920s",
+    meta:"Banarasi Street Food · Near Vishwanath Temple · Open 14:30–22:00",
+    rating:"★ 4.3 · 26,470 reviews",
+    tags:["Tamatar Chaat","Palak Patta","Golgappa","₹20–₹60"],
+    img:"https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600&q=80",
+    bg:"https://images.unsplash.com/photo-1561361058-c24cecae35ca?w=1200&q=60",
+    url:"kashichatbhandar.com",
+    pbval:"Kashi Chat Bhandar, Varanasi"
+  },
+  {
+    name:"Old Original Vinayaka Mylari",
+    city:"Mysuru",
+    badge:"Mysuru, KA · Est. 1938",
+    meta:"Benne Masala Dosa · Nazarbad · Open 07:00–11:00 & 16:00–20:30",
+    rating:"★ 4.2 · 17,637 reviews",
+    tags:["Benne Masala Dosa","Idli","Filter Coffee","₹40–₹80"],
+    img:"https://images.unsplash.com/photo-1567188040759-fb8a883dc6d6?w=600&q=80",
+    bg:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&q=60",
+    url:"vinayakamylari.in",
+    pbval:"Vinayaka Mylari, Mysuru"
+  },
+  {
+    name:"Upré by 1559 AD",
+    city:"Udaipur",
+    badge:"Udaipur, RJ · Lake Pichola",
+    meta:"Rajasthani Fine Dining · Rooftop · Bar · Open Daily 07:30–23:00",
+    rating:"★ 3.7 · 5,231 reviews",
+    tags:["Laal Maas","Dal Baati","Cocktails","₹300+"],
+    img:"https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80",
+    bg:"https://images.unsplash.com/photo-1477587458883-47145ed94245?w=1200&q=60",
+    url:"upre1559ad.com",
+    pbval:"Upré by 1559 AD, Udaipur"
+  },
+  {
+    name:"Mango Tree Restaurant",
+    city:"Hampi",
+    badge:"Hampi, KA · Near Virupaksha Temple",
+    meta:"South Indian & World Veg · Lonely Planet Featured · Open 07:00–21:30",
+    rating:"★ 4.4 · Cult Status",
+    tags:["Veg Thali ₹180","Mango Lassi","Banana Pancakes","No Alcohol"],
+    img:"https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=600&q=80",
+    bg:"https://images.unsplash.com/photo-1580133318324-f2f76d987dd7?w=1200&q=60",
+    url:"mangotreehampi.in",
+    pbval:"Mango Tree Restaurant, Hampi"
+  },
+  {
+    name:"Villa Shanti",
+    city:"Pondicherry",
+    badge:"Puducherry · White Town · French Quarter",
+    meta:"French-Tamil Fusion · Heritage Bungalow · Lunch & Dinner",
+    rating:"★ 4.4 · 900+ reviews",
+    tags:["Chettinad Curry","Crêpes","Crème Brûlée","Wine"],
+    img:"https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&q=80",
+    bg:"https://images.unsplash.com/photo-1533422906928-4e14c3a0c3df?w=1200&q=60",
+    url:"villashanti.com",
+    pbval:"Villa Shanti, Pondicherry"
+  },
+  {
+    name:"Sunset Café Pushkar",
+    city:"Pushkar",
+    badge:"Pushkar, RJ · Lakeside Rooftop",
+    meta:"Pure Veg Rooftop · Pushkar Lake View · Open 07:30–22:00",
+    rating:"★ 4.2 · Backpacker Classic",
+    tags:["Malpua","Rajasthani Thali","Banana Lassi","₹30–₹220"],
+    img:"https://images.unsplash.com/photo-1552566626-52f8b828add9?w=600&q=80",
+    bg:"https://images.unsplash.com/photo-1504279577054-acfeccf8fc52?w=1200&q=60",
+    url:"sunsetcafepushkar.in",
+    pbval:"Sunset Café Pushkar"
+  },
+  {
+    name:"Sheesh Mahal Restaurant",
+    city:"Orchha",
+    badge:"Orchha, MP · Heritage Palace · MPTDC",
+    meta:"Bundeli & North Indian · Palace Courtyard · 3 Meal Services",
+    rating:"★ 4.1 · 750+ reviews",
+    tags:["Bundeli Thali","Dal Makhani","Poha Jalebi","₹80–₹280"],
+    img:"https://images.unsplash.com/photo-1565299507177-b0ac66763828?w=600&q=80",
+    bg:"https://images.unsplash.com/photo-1587474260584-136574528ed5?w=1200&q=60",
+    url:"sheeshmahalorchha.in",
+    pbval:"Sheesh Mahal, Orchha"
+  }
+];
+
+let current = 0;
+let timer = null;
+let progress = 0;
+const INTERVAL = 5000;
+
+function buildCityStrip(){
+  const strip = document.getElementById('cityStrip');
+  strip.innerHTML = '';
+  CITIES.forEach((c,i)=>{
+    const p = document.createElement('div');
+    p.className = 'city-pill' + (i===0?' active':'');
+    p.textContent = c.city;
+    p.onclick = ()=>{ goTo(i); resetTimer(); };
+    strip.appendChild(p);
+  });
+}
+
+function updatePanel(i, animate){
+  const c = CITIES[i];
+  if(animate){
+    document.getElementById('miniSite').style.opacity='0';
+    setTimeout(()=>{
+      applyData(c);
+      document.getElementById('miniSite').style.opacity='1';
+    },300);
+  } else {
+    applyData(c);
+  }
+  document.getElementById('panelBgImg').src = c.bg;
+  document.getElementById('pbVal').textContent = c.pbval;
+  document.querySelectorAll('.city-pill').forEach((p,idx)=>{
+    p.classList.toggle('active', idx===i);
+  });
+}
+
+function applyData(c){
+  document.getElementById('miniImg').src = c.img;
+  document.getElementById('miniLogoText').textContent = c.name;
+  document.getElementById('miniBadge').textContent = c.badge;
+  document.getElementById('miniName').textContent = c.name;
+  document.getElementById('miniMeta').textContent = c.meta;
+  document.getElementById('miniRating').textContent = c.rating;
+  document.getElementById('browserUrl').innerHTML = '<span>'+c.url+'</span>';
+  const tagsEl = document.getElementById('miniTags');
+  tagsEl.innerHTML = c.tags.map(t=>`<span class="mini-tag">${t}</span>`).join('');
+}
+
+function goTo(i){
+  current = i;
+  progress = 0;
+  updatePanel(i, true);
+}
+
+function tick(){
+  progress += 100/INTERVAL*50;
+  if(progress >= 100){
+    progress = 0;
+    current = (current+1) % CITIES.length;
+    updatePanel(current, true);
+  }
+  document.getElementById('progBar').style.width = progress+'%';
+}
+
+function resetTimer(){
+  progress = 0;
+  clearInterval(timer);
+  timer = setInterval(tick, 50);
+}
+
+buildCityStrip();
+updatePanel(0, false);
+timer = setInterval(tick, 50);
+
+// ─── FADE IN ───
+const obs = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target);} });
+},{threshold:.08});
+document.querySelectorAll('.fade').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
